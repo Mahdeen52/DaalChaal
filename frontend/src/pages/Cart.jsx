@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useCart } from '../context/CartContext';
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 
 function Cart() {
-    const { cart, loading, updateCartItem, removeFromCart, checkout, getCartItemCount } = useCart();
-    const [isCheckingOut, setIsCheckingOut] = useState(false);
+    const { cart, loading, updateCartItem, removeFromCart, getCartItemCount } = useCart();
     const navigate = useNavigate();
 
     const handleQuantityChange = async (itemId, newQuantity) => {
@@ -17,19 +16,8 @@ function Cart() {
         await removeFromCart(itemId);
     };
 
-    const handleCheckout = async () => {
-        setIsCheckingOut(true);
-        try {
-            const result = await checkout({ address: 'Simulated Address' });
-            if (result.success) {
-                alert('Checkout successful! Hope you didn\'t overthink it too much.');
-                navigate('/dashboard');
-            }
-        } catch (error) {
-            console.error('Checkout failed:', error);
-        } finally {
-            setIsCheckingOut(false);
-        }
+    const handleCheckout = () => {
+        navigate('/billing');
     };
 
     if (loading && !cart) {
@@ -75,7 +63,7 @@ function Cart() {
                                     <div style={styles.itemInfo}>
                                         <h3 style={styles.itemName}>{cartItem.item?.name}</h3>
                                         <p style={styles.itemCategory}>{cartItem.item?.category}</p>
-                                        <p style={styles.itemPrice}>৳{cartItem.item?.price}</p>
+                                        <p style={styles.itemPrice}>Tk. {cartItem.item?.price}</p>
                                     </div>
                                     <div style={styles.itemActions}>
                                         <div style={styles.quantityControls}>
@@ -104,22 +92,21 @@ function Cart() {
                             <h2 style={styles.summaryTitle}>Order Summary</h2>
                             <div style={styles.summaryRow}>
                                 <span>Subtotal</span>
-                                <span>৳{cart.totalPrice}</span>
+                                <span>Tk. {cart.totalPrice}</span>
                             </div>
                             <div style={styles.summaryRow}>
                                 <span>Overthinking Tax</span>
-                                <span style={{ color: '#C9A227' }}>৳0 (For now...)</span>
+                                <span style={{ color: '#C9A227' }}>Tk. 0 (For now...)</span>
                             </div>
                             <div style={{ ...styles.summaryRow, ...styles.totalRow }}>
                                 <span>Total</span>
-                                <span>৳{cart.totalPrice}</span>
+                                <span>Tk. {cart.totalPrice}</span>
                             </div>
                             <button
                                 onClick={handleCheckout}
-                                disabled={isCheckingOut}
                                 style={styles.checkoutBtn}
                             >
-                                {isCheckingOut ? 'Processing...' : 'Proceed to Checkout'}
+                                Proceed to Checkout
                             </button>
                             <button
                                 onClick={() => navigate('/browse')}
@@ -131,7 +118,7 @@ function Cart() {
                     </div>
                 ) : (
                     <div style={styles.emptyState}>
-                        <div style={{ fontSize: '64px', marginBottom: '24px' }}>🛒</div>
+                        <div style={{ fontSize: '64px', marginBottom: '24px' }}></div>
                         <button
                             onClick={() => navigate('/browse')}
                             style={styles.checkoutBtn}

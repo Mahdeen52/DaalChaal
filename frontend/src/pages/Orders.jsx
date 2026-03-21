@@ -48,7 +48,7 @@ function Orders() {
                             A record of your past premium acquisitions
                         </p>
                     </div>
-                    <div style={{ fontSize: '64px', opacity: 0.3 }}>📦</div>
+                    <div style={{ fontSize: '64px', opacity: 0.3 }}></div>
                 </div>
 
                 {loading ? (
@@ -57,7 +57,7 @@ function Orders() {
                     </div>
                 ) : orders.length === 0 ? (
                     <div className="card" style={{ textAlign: 'center', padding: '80px 40px' }}>
-                        <div style={{ fontSize: '80px', marginBottom: '24px' }}>🛒</div>
+                        <div style={{ fontSize: '80px', marginBottom: '24px' }}></div>
                         <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '12px', color: 'var(--text-primary)' }}>
                             No acquisitions yet
                         </h2>
@@ -108,7 +108,7 @@ function Orders() {
                                     </div>
                                     <div style={{ textAlign: 'right' }}>
                                         <div style={{ fontSize: '28px', fontWeight: '900', color: 'var(--royal-main)' }}>
-                                            ৳{order.totalPrice.toFixed(2)}
+                                            Tk. {order.totalPrice.toFixed(2)}
                                         </div>
                                         <div style={{ fontSize: '12px', color: '#94a3b8', fontWeight: '700', textTransform: 'uppercase' }}>
                                             Total Amount Paid
@@ -149,7 +149,7 @@ function Orders() {
                                                             </div>
                                                         </div>
                                                         <div style={{ fontSize: '15px', fontWeight: '800', color: 'var(--text-primary)' }}>
-                                                            ৳{(orderItem.price * orderItem.quantity).toFixed(2)}
+                                                            Tk. {(orderItem.price * orderItem.quantity).toFixed(2)}
                                                         </div>
                                                     </div>
                                                 ))}

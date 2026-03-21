@@ -7,7 +7,14 @@ const User = require('../models/User.model');
 // @access  Private
 const checkout = async (req, res) => {
     try {
-        const { shippingAddress } = req.body;
+        const {
+            shippingAddress,
+            customerName,
+            phone,
+            installmentPlan,
+            installmentDetails,
+            paymentMethod
+        } = req.body;
 
         // Get user's cart
         const cart = await Cart.findOne({ user: req.user._id }).populate('items.item');
@@ -30,7 +37,11 @@ const checkout = async (req, res) => {
             items: orderItems,
             totalPrice: cart.totalPrice,
             status: 'completed',
-            paymentMethod: 'simulated',
+            paymentMethod: paymentMethod || 'simulated',
+            customerName: customerName || '',
+            phone: phone || '',
+            installmentPlan: installmentPlan || 'A',
+            installmentDetails: installmentDetails || [],
             shippingAddress: shippingAddress || {
                 street: '123 Overthinking Ave',
                 city: 'Decision City',
@@ -59,6 +70,7 @@ const checkout = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 // @desc    Get user's order history
 // @route   GET /api/orders

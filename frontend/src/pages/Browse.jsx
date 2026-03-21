@@ -68,7 +68,7 @@ function Browse() {
             <div className="container" style={styles.container}>
                 {/* Page Header */}
                 <div className="page-header" style={styles.header}>
-                    <span className="page-badge" style={styles.badge}>✨ Premium Selection</span>
+                    <span className="page-badge" style={styles.badge}>Premium Selection</span>
                     <h1 style={styles.title}>Our Products</h1>
                     <p style={styles.subtitle}>
                         Carefully curated items for the discerning shopper.
@@ -84,7 +84,7 @@ function Browse() {
                         color: message.type === 'error' ? '#B91C1C' : '#065F46',
                         border: `1px solid ${message.type === 'error' ? '#FECACA' : '#A7F3D0'}`
                     }}>
-                        <span>{message.type === 'error' ? '❌' : '✓'}</span>
+                        <span>{message.type === 'error' ? '!' : 'OK'}</span>
                         {message.text}
                     </div>
                 )}
@@ -121,7 +121,7 @@ function Browse() {
                                         }}
                                     />
                                     <div className="price-badge" style={styles.priceBadge}>
-                                        ৳{item.price}
+                                        Tk. {item.price}
                                     </div>
                                 </div>
 
@@ -164,7 +164,7 @@ function Browse() {
                                     {/* Overthinking Comment Box */}
                                     <div className="overthinking-box" style={styles.overthinkingBox}>
                                         <div style={styles.overthinkingHeader}>
-                                            <span className="overthinking-icon" style={styles.overthinkingIcon}>🤔</span>
+                                            <span className="overthinking-icon" style={styles.overthinkingIcon}></span>
                                             <span style={styles.overthinkingLabel}>Overthinking Aspect</span>
                                         </div>
                                         <p style={styles.overthinkingText}>

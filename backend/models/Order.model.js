@@ -15,6 +15,13 @@ const OrderItemSchema = new mongoose.Schema({
     }
 });
 
+const InstallmentDetailSchema = new mongoose.Schema({
+    installmentNumber: Number,
+    amount: Number,
+    dueDate: String,
+    label: String
+});
+
 const OrderSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -35,6 +42,15 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         default: 'simulated'
     },
+    // Billing info
+    customerName: { type: String, default: '' },
+    phone: { type: String, default: '' },
+    installmentPlan: {
+        type: String,
+        enum: ['A', 'B', 'C', 'D'],
+        default: 'A'
+    },
+    installmentDetails: [InstallmentDetailSchema],
     shippingAddress: {
         street: String,
         city: String,
