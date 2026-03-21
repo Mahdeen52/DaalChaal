@@ -45,7 +45,7 @@ function Register() {
             {/* Header/Logo Area */}
             <header style={styles.header}>
                 <Link to="/" style={styles.logo}>
-                    <span style={styles.logoIcon}>🛒</span>
+                    <span style={styles.logoIcon}></span>
                     <span style={styles.logoText}>DalChaal</span>
                 </Link>
             </header>
@@ -65,7 +65,7 @@ function Register() {
                     {/* Error Message */}
                     {error && (
                         <div style={styles.errorBox}>
-                            <span style={styles.errorIcon}>⚠️</span>
+                            <span style={styles.errorIcon}>!</span>
                             {error}
                         </div>
                     )}

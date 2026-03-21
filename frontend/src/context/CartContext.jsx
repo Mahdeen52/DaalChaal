@@ -107,10 +107,10 @@ export const CartProvider = ({ children }) => {
         }
     };
 
-    const checkout = async (shippingAddress) => {
+    const checkout = async ({ shippingAddress, customerName, phone, installmentPlan, installmentDetails, paymentMethod }) => {
         try {
             const res = await axios.post('http://localhost:5000/api/orders/checkout',
-                { shippingAddress },
+                { shippingAddress, customerName, phone, installmentPlan, installmentDetails, paymentMethod },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setCart({ items: [], totalPrice: 0 }); // Clear cart after checkout

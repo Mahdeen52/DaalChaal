@@ -9,6 +9,8 @@ import Dashboard from './pages/Dashboard';
 import Orders from './pages/Orders';
 import Cart from './pages/Cart';
 import ShoppingAssistant from './pages/ShoppingAssistant';
+import Billing from './pages/Billing';
+import OrderConfirmation from './pages/OrderConfirmation';
 
 // Protected Route Component
 function ProtectedRoute({ children }) {
@@ -76,6 +78,22 @@ function App() {
                             element={
                                 <ProtectedRoute>
                                     <ShoppingAssistant />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/billing"
+                            element={
+                                <ProtectedRoute>
+                                    <Billing />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/confirm"
+                            element={
+                                <ProtectedRoute>
+                                    <OrderConfirmation />
                                 </ProtectedRoute>
                             }
                         />

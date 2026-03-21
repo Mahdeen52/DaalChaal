@@ -70,7 +70,7 @@ function ShoppingAssistant() {
                                 animation: loading ? 'pulse-gold 1.5s infinite' : 'none'
                             }}></div>
                             <div style={styles.core}>
-                                <span style={styles.coreIcon}>🔍</span>
+                                <span style={styles.coreIcon}></span>
                             </div>
                         </div>
 

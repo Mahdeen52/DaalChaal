@@ -69,7 +69,7 @@ function Dashboard() {
                         </div>
                     </div>
                     <div style={styles.dateBadge}>
-                        📊 {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                        {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                     </div>
                 </div>
 
@@ -87,7 +87,7 @@ function Dashboard() {
                                 title="Total Decisions"
                                 value={stats?.decisionsMade || 0}
                                 subtext="Items processed"
-                                icon="🛒"
+                                icon=""
                                 accentColor="#C9A227"
                             />
                             <StatCard
@@ -95,7 +95,7 @@ function Dashboard() {
                                 title="Hesitation Count"
                                 value={stats?.hesitationCount || 0}
                                 subtext="Items returned to shelf"
-                                icon="🤔"
+                                icon=""
                                 accentColor="#F59E0B"
                             />
                             <StatCard
@@ -103,7 +103,7 @@ function Dashboard() {
                                 title="Analysis Paralysis"
                                 value={`${stats?.overthinkingScore || 0}%`}
                                 subtext={stats?.overthinkingScore > 50 ? "High anxiety detected" : "Within normal limits"}
-                                icon="📈"
+                                icon=""
                                 accentColor={stats?.overthinkingScore > 50 ? "#DC2626" : "#059669"}
                             />
                         </div>
@@ -120,7 +120,7 @@ function Dashboard() {
                             <div style={styles.activityList}>
                                 {stats?.recentActivity?.length === 0 ? (
                                     <div style={styles.emptyState}>
-                                        <span style={styles.emptyIcon}>📋</span>
+                                        <span style={styles.emptyIcon}></span>
                                         <p>No recent activity found.</p>
                                         <p style={styles.emptySubtext}>Start shopping to see your decisions here!</p>
                                     </div>
@@ -154,7 +154,7 @@ function Dashboard() {
                                                 ...styles.itemPrice,
                                                 color: activity.action === 'buy' ? '#C9A227' : '#999999'
                                             }}>
-                                                ৳{activity.item ? activity.item.price.toFixed(2) : '0.00'}
+                                                Tk. {activity.item ? activity.item.price.toFixed(2) : '0.00'}
                                             </div>
                                         </div>
                                     ))
