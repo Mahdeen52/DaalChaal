@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('token', data.token);
             setToken(data.token);
             setUser(data);
-            return { success: true };
+            return { success: true, role: data.role };
         } catch (error) {
             return {
                 success: false,

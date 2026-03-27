@@ -11,6 +11,7 @@ import Cart from './pages/Cart';
 import ShoppingAssistant from './pages/ShoppingAssistant';
 import Billing from './pages/Billing';
 import OrderConfirmation from './pages/OrderConfirmation';
+import Admin from './pages/Admin';
 
 // Protected Route Component
 function ProtectedRoute({ children }) {
@@ -31,6 +32,15 @@ function ProtectedRoute({ children }) {
     }
 
     return isAuthenticated ? children : <Navigate to="/login" />;
+}
+
+// Admin-only Route
+function AdminRoute({ children }) {
+    const { user, isAuthenticated, loading } = useAuth();
+    if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
+    if (!isAuthenticated) return <Navigate to="/login" />;
+    if (user?.role !== 'admin') return <Navigate to="/dashboard" />;
+    return children;
 }
 
 function App() {
@@ -95,6 +105,14 @@ function App() {
                                 <ProtectedRoute>
                                     <OrderConfirmation />
                                 </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/admin"
+                            element={
+                                <AdminRoute>
+                                    <Admin />
+                                </AdminRoute>
                             }
                         />
                         <Route path="/" element={<Navigate to="/login" />} />
