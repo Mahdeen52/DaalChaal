@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
@@ -6,8 +6,20 @@ function Login() {
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { login } = useAuth();
+    const { login, isAuthenticated, user: authUser } = useAuth();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isAuthenticated && authUser) {
+            navigate(authUser.role === 'admin' ? '/admin' : '/browse');
+        }
+    }, [isAuthenticated, authUser, navigate]);
+
+    // Hardcoded admin credentials (for demo/dev)
+    const ADMIN_EMAIL = 'admin@dalchaal.com';
+    const ADMIN_PASSWORD = 'Admin@1234';
+
+    const fillAdmin = () => setFormData({ email: ADMIN_EMAIL, password: ADMIN_PASSWORD });
 
     const { email, password } = formData;
 
@@ -20,7 +32,7 @@ function Login() {
         const result = await login(email, password);
         setLoading(false);
         if (result.success) {
-            navigate('/browse');
+            navigate(result.role === 'admin' ? '/admin' : '/browse');
         } else {
             setError(result.message || 'Login failed');
         }
@@ -52,6 +64,31 @@ function Login() {
 
                     {/* Gold Divider */}
                     <div style={styles.divider}></div>
+
+                    {/* Admin Hint */}
+                    <div
+                        style={styles.adminHint}
+                        onClick={fillAdmin}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.background = 'rgba(201, 162, 39, 0.15)';
+                            e.currentTarget.style.borderColor = 'rgba(201, 162, 39, 0.5)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.background = 'rgba(201, 162, 39, 0.08)';
+                            e.currentTarget.style.borderColor = 'rgba(201, 162, 39, 0.3)';
+                        }}
+                    >
+                        <div style={styles.adminHintTitle}>
+                            <span style={styles.adminHintIcon}>🛡️</span>
+                            Admin Access
+                        </div>
+                        <div style={styles.adminHintBody}>
+                            Click here to auto-fill admin credentials
+                        </div>
+                        <div style={styles.adminHintCreds}>
+                            {ADMIN_EMAIL} / {ADMIN_PASSWORD}
+                        </div>
+                    </div>
 
                     {/* Error Message */}
                     {error && (
@@ -238,6 +275,39 @@ const styles = {
         height: '2px',
         background: 'linear-gradient(90deg, transparent, #C9A227, transparent)',
         marginBottom: '32px'
+    },
+    adminHint: {
+        background: 'rgba(201, 162, 39, 0.08)',
+        border: '1px dashed rgba(201, 162, 39, 0.3)',
+        borderRadius: '16px',
+        padding: '16px',
+        marginBottom: '24px',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        textAlign: 'center'
+    },
+    adminHintTitle: {
+        color: '#E8D48A',
+        fontSize: '14px',
+        fontWeight: '600',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+        marginBottom: '4px'
+    },
+    adminHintIcon: {
+        fontSize: '16px'
+    },
+    adminHintBody: {
+        color: 'rgba(255, 255, 255, 0.5)',
+        fontSize: '12px',
+        marginBottom: '4px'
+    },
+    adminHintCreds: {
+        color: 'rgba(255, 255, 255, 0.7)',
+        fontSize: '13px',
+        fontFamily: "'Courier New', monospace"
     },
     errorBox: {
         background: 'rgba(220, 38, 38, 0.1)',
