@@ -92,8 +92,77 @@ function Browse() {
                 {/* Products Grid */}
                 {loading ? (
                     <div style={styles.loadingContainer}>
-                        <div style={styles.spinner}></div>
-                        <p>Loading premium products...</p>
+                        <style>{`
+                            @keyframes premiumSpin {
+                                0% { transform: rotate(0deg); }
+                                100% { transform: rotate(360deg); }
+                            }
+                            @keyframes premiumSpinReverse {
+                                0% { transform: rotate(0deg); }
+                                100% { transform: rotate(-360deg); }
+                            }
+                            @keyframes premiumGlow {
+                                0%, 100% { box-shadow: 0 0 15px rgba(201,162,39,0.2), 0 0 30px rgba(201,162,39,0.05); }
+                                50% { box-shadow: 0 0 25px rgba(201,162,39,0.5), 0 0 50px rgba(201,162,39,0.2); }
+                            }
+                            @keyframes premiumPulse {
+                                0%, 100% { opacity: 0.4; }
+                                50% { opacity: 0.7; }
+                            }
+                            .premium-spinner-outer {
+                                position: absolute;
+                                top: -10px; left: -10px;
+                                width: 100px; height: 100px;
+                                border-radius: 50%;
+                                border: 2px solid rgba(201,162,39,0.1);
+                                animation: premiumGlow 2s ease-in-out infinite;
+                            }
+                            .premium-spinner-ring {
+                                position: absolute;
+                                top: 0; left: 0;
+                                width: 80px; height: 80px;
+                                border-radius: 50%;
+                                border: 3.5px solid transparent;
+                                border-top-color: #C9A227;
+                                border-right-color: rgba(201,162,39,0.35);
+                                animation: premiumSpin 1s linear infinite;
+                            }
+                            .premium-spinner-inner {
+                                position: absolute;
+                                top: 16px; left: 16px;
+                                width: 48px; height: 48px;
+                                border-radius: 50%;
+                                border: 2.5px solid transparent;
+                                border-bottom-color: #E8D48A;
+                                border-left-color: rgba(232,212,138,0.3);
+                                animation: premiumSpinReverse 1.5s linear infinite;
+                            }
+                            .premium-spinner-dot {
+                                position: absolute;
+                                top: 50%; left: 50%;
+                                transform: translate(-50%, -50%);
+                                width: 8px; height: 8px;
+                                border-radius: 50%;
+                                background: linear-gradient(135deg, #C9A227, #E8D48A);
+                                box-shadow: 0 0 12px rgba(201,162,39,0.6), 0 0 24px rgba(201,162,39,0.3);
+                            }
+                            .premium-loading-text {
+                                color: rgba(255,255,255,0.4);
+                                font-size: 14px;
+                                font-weight: 400;
+                                letter-spacing: 1.5px;
+                                text-transform: uppercase;
+                                font-family: 'Poppins', sans-serif;
+                                animation: premiumPulse 2s ease-in-out infinite;
+                            }
+                        `}</style>
+                        <div style={{ position: 'relative', width: 80, height: 80, marginBottom: 32 }}>
+                            <div className="premium-spinner-outer"></div>
+                            <div className="premium-spinner-ring"></div>
+                            <div className="premium-spinner-inner"></div>
+                            <div className="premium-spinner-dot"></div>
+                        </div>
+                        <p className="premium-loading-text">Loading premium products...</p>
                     </div>
                 ) : (
                     <div style={styles.grid}>
@@ -273,18 +342,73 @@ const styles = {
         border: '1px solid rgba(255, 255, 255, 0.1)'
     },
     loadingContainer: {
-        textAlign: 'center',
-        padding: '100px 0',
-        color: 'rgba(255, 255, 255, 0.6)'
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '120px 0',
+        minHeight: '60vh'
     },
-    spinner: {
+    spinnerWrapper: {
+        position: 'relative',
+        width: '80px',
+        height: '80px',
+        marginBottom: '32px'
+    },
+    spinnerGlow: {
+        position: 'absolute',
+        top: '-10px',
+        left: '-10px',
+        width: '100px',
+        height: '100px',
+        borderRadius: '50%',
+        border: '2px solid rgba(201, 162, 39, 0.12)',
+        boxShadow: '0 0 20px rgba(201, 162, 39, 0.3), 0 0 40px rgba(201, 162, 39, 0.1)',
+        animation: 'spinnerGlow 2s ease-in-out infinite'
+    },
+    spinnerRing: {
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '80px',
+        height: '80px',
+        borderRadius: '50%',
+        border: '3.5px solid transparent',
+        borderTopColor: '#C9A227',
+        borderRightColor: 'rgba(201, 162, 39, 0.35)',
+        animation: 'spin 1s linear infinite'
+    },
+    spinnerInner: {
+        position: 'absolute',
+        top: '16px',
+        left: '16px',
         width: '48px',
         height: '48px',
-        border: '3px solid rgba(255, 255, 255, 0.1)',
-        borderTopColor: '#C9A227',
         borderRadius: '50%',
-        margin: '0 auto 20px',
-        animation: 'spin 1s linear infinite'
+        border: '2.5px solid transparent',
+        borderBottomColor: '#E8D48A',
+        borderLeftColor: 'rgba(232, 212, 138, 0.3)',
+        animation: 'spinReverse 1.5s linear infinite'
+    },
+    spinnerDot: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '8px',
+        height: '8px',
+        borderRadius: '50%',
+        background: 'linear-gradient(135deg, #C9A227, #E8D48A)',
+        boxShadow: '0 0 12px rgba(201, 162, 39, 0.6), 0 0 24px rgba(201, 162, 39, 0.3)'
+    },
+    loadingText: {
+        color: 'rgba(255, 255, 255, 0.45)',
+        fontSize: '14px',
+        fontWeight: '400',
+        letterSpacing: '1.5px',
+        textTransform: 'uppercase',
+        fontFamily: "'Poppins', sans-serif",
+        animation: 'fadeInUp 0.8s ease forwards'
     },
     grid: {
         display: 'grid',
