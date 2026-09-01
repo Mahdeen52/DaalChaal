@@ -73,7 +73,6 @@ function OrderConfirmation() {
     const items = savedItems;
     const total = savedTotal;
     const planColor = PLAN_COLORS[billing.installmentPlan] || '#C9A227';
-    const today = new Date().toLocaleDateString('en-BD', { year: 'numeric', month: 'long', day: 'numeric' });
 
     const handlePlaceOrderClick = () => {
         if (selectedPaymentMethod === 'cash_on_delivery') {
@@ -232,11 +231,14 @@ function OrderConfirmation() {
         doc.setTextColor(100, 100, 100);
         doc.text('Plan:', labelX, y);
         doc.setTextColor(30, 30, 30);
+        // eslint-disable-next-line no-control-regex
         doc.text((billing.planLabel || ('Plan ' + billing.installmentPlan)).replace(/[^\x00-\x7F]/g, ''), valueX, y);
         y += 7;
 
         billing.installmentDetails.forEach((inst) => {
+            // eslint-disable-next-line no-control-regex
             const label = (inst.label || '').replace(/[^\x00-\x7F]/g, '');
+            // eslint-disable-next-line no-control-regex
             const due = (inst.dueDate || '').replace(/[^\x00-\x7F]/g, '');
             const amt = 'Tk. ' + inst.amount;
 
@@ -288,6 +290,7 @@ function OrderConfirmation() {
             y += 7;
         } else {
             items.forEach((cartItem) => {
+                // eslint-disable-next-line no-control-regex
                 const name = (cartItem.item?.name || 'Item').replace(/[^\x00-\x7F]/g, '');
                 const qty = cartItem.quantity || 1;
                 const price = cartItem.item?.price || 0;

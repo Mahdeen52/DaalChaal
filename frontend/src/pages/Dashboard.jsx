@@ -8,7 +8,6 @@ function Dashboard() {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
     const [hoveredCard, setHoveredCard] = useState(null);
-    const [hoveredActivity, setHoveredActivity] = useState(null);
 
     useEffect(() => {
         const fetchStats = async () => {
