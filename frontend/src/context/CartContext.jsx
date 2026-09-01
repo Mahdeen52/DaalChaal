@@ -2,6 +2,8 @@ import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from './AuthContext';
 
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 const CartContext = createContext();
 
 export const useCart = () => {
@@ -29,7 +31,7 @@ export const CartProvider = ({ children }) => {
     const fetchCart = async () => {
         try {
             setLoading(true);
-            const res = await axios.get('http://localhost:5000/api/cart', {
+            const res = await axios.get(`${API_BASE}/api/cart`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setCart(res.data);
@@ -42,7 +44,7 @@ export const CartProvider = ({ children }) => {
 
     const addToCart = async (itemId, quantity = 1) => {
         try {
-            const res = await axios.post('http://localhost:5000/api/cart/add',
+            const res = await axios.post(`${API_BASE}/api/cart/add`,
                 { itemId, quantity },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -58,7 +60,7 @@ export const CartProvider = ({ children }) => {
 
     const removeFromCart = async (itemId) => {
         try {
-            const res = await axios.post('http://localhost:5000/api/cart/remove',
+            const res = await axios.post(`${API_BASE}/api/cart/remove`,
                 { itemId },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -78,7 +80,7 @@ export const CartProvider = ({ children }) => {
 
     const updateCartItem = async (itemId, quantity) => {
         try {
-            const res = await axios.put('http://localhost:5000/api/cart/update',
+            const res = await axios.put(`${API_BASE}/api/cart/update`,
                 { itemId, quantity },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -94,7 +96,7 @@ export const CartProvider = ({ children }) => {
 
     const clearCart = async () => {
         try {
-            const res = await axios.delete('http://localhost:5000/api/cart', {
+            const res = await axios.delete(`${API_BASE}/api/cart`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setCart(res.data.cart);
@@ -109,7 +111,7 @@ export const CartProvider = ({ children }) => {
 
     const checkout = async ({ shippingAddress, customerName, phone, installmentPlan, installmentDetails, paymentMethod }) => {
         try {
-            const res = await axios.post('http://localhost:5000/api/orders/checkout',
+            const res = await axios.post(`${API_BASE}/api/orders/checkout`,
                 { shippingAddress, customerName, phone, installmentPlan, installmentDetails, paymentMethod },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
