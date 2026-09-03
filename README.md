@@ -1,5 +1,5 @@
 # Supermarket Simulator
-
+https://daalchal.vercel.app
 A web application that simulates the overthinking process during grocery shopping decisions.
 
 ## Project Structure
